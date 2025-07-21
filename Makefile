@@ -17,7 +17,9 @@ REPO3_URL := $(REPO_BASE_URL)/$(REPO3_NAME).git
 help:
 	@echo "Available commands:"
 	@echo "  setup     - Clone all repositories"
-	@echo "  start - Start all projects"
+	@echo "  install   - Install dependencies for all projects"
+	@echo "  start     - Start all projects"
+	@echo "  stop      - Stop all projects"
 	@echo "  clean     - Remove all cloned repositories"
 
 # Clone all repositories
@@ -59,26 +61,51 @@ start:
 	@echo "🚀 Starting all projects..."
 	@if [ -d "$(REPO1_NAME)" ]; then \
 		echo "Starting $(REPO1_NAME) in background..."; \
-		cd $(REPO1_NAME) && (make start || npm start) & \
+		cd $(REPO1_NAME) && (make start) & \
 	fi
 	@if [ -d "$(REPO2_NAME)" ]; then \
 		echo "Starting $(REPO2_NAME) in background..."; \
-		cd $(REPO2_NAME) && (make start || npm start) & \
+		cd $(REPO2_NAME) && ( & \
 	fi
 	@if [ -d "$(REPO3_NAME)" ]; then \
 		echo "Starting $(REPO3_NAME)..."; \
-		cd $(REPO3_NAME) && (make start || npm start); \
+		cd $(REPO3_NAME) && (); \
 	fi
 
 # Install dependencies for all repositories
 .PHONY: install
 install:
-	@for repo in $(REPO1_NAME) $(REPO2_NAME) $(REPO3_NAME); do \
-		if [ -d "$$repo" ]; then \
-			echo "📦 Installing dependencies for $$repo..."; \
-			cd $$repo && (pnpm install); \
-		fi; \
-	done
+	@echo "🔧 Installing dependencies for all projects..."
+	@if [ -d "$(REPO1_NAME)" ]; then \
+		echo "Installing dependencies for $(REPO1_NAME)..."; \
+		cd $(REPO1_NAME) && (make install); \
+	fi
+	@if [ -d "$(REPO2_NAME)" ]; then \
+		echo "Installing dependencies for $(REPO2_NAME)..."; \
+		cd $(REPO2_NAME) && (make install); \
+	fi
+	@if [ -d "$(REPO3_NAME)" ]; then \
+		echo "Installing dependencies for $(REPO3_NAME)..."; \
+		cd $(REPO3_NAME) && (make install); \
+	fi
+
+.PHONY: stop
+stop:
+	@echo "🛑 Stopping all projects..."
+	@if [ -d "$(REPO1_NAME)" ]; then \
+		echo "Stopping $(REPO1_NAME)..."; \
+		cd $(REPO1_NAME) && (make stop); \
+	fi
+	@if [ -d "$(REPO2_NAME)" ]; then \
+		echo "Stopping $(REPO2_NAME)..."; \
+		cd $(REPO2_NAME) && (make stop); \
+	fi
+	@if [ -d "$(REPO3_NAME)" ]; then \
+		echo "Stopping $(REPO3_NAME)..."; \
+		cd $(REPO3_NAME) && (make stop); \
+	fi
+
+
 
 # Clean up - remove all cloned repositories
 .PHONY: clean
