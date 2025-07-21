@@ -17,7 +17,7 @@ REPO3_URL := $(REPO_BASE_URL)/$(REPO3_NAME).git
 help:
 	@echo "Available commands:"
 	@echo "  setup     - Clone all repositories"
-	@echo "  start-all - Start all projects"
+	@echo "  start - Start all projects"
 	@echo "  clean     - Remove all cloned repositories"
 
 # Clone all repositories
@@ -54,8 +54,8 @@ clone-repo3:
 	fi
 
 # Start all projects (assumes they're already cloned)
-.PHONY: start-all
-start-all:
+.PHONY: start
+start:
 	@echo "🚀 Starting all projects..."
 	@if [ -d "$(REPO1_NAME)" ]; then \
 		echo "Starting $(REPO1_NAME) in background..."; \
@@ -69,6 +69,16 @@ start-all:
 		echo "Starting $(REPO3_NAME)..."; \
 		cd $(REPO3_NAME) && (make start || npm start); \
 	fi
+
+# Install dependencies for all repositories
+.PHONY: install
+install:
+	@for repo in $(REPO1_NAME) $(REPO2_NAME) $(REPO3_NAME); do \
+		if [ -d "$$repo" ]; then \
+			echo "📦 Installing dependencies for $$repo..."; \
+			cd $$repo && (pnpm install); \
+		fi; \
+	done
 
 # Clean up - remove all cloned repositories
 .PHONY: clean
