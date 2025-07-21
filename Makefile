@@ -112,7 +112,7 @@ stop:
 clean:
 	@read -p "Are you sure you want to delete all repositories? [y/N] " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
-		rm -rf $(REPO1_NAME) $(REPO2_NAME) $(REPO3_NAME); \
+		sudo rm -rf $(REPO1_NAME) $(REPO2_NAME) $(REPO3_NAME); \
 		echo "🧹 All repositories removed"; \
 	else \
 		echo "❌ Clean cancelled"; \
