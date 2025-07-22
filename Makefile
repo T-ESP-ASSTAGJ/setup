@@ -60,16 +60,12 @@ clone-repo3:
 start:
 	@echo "🚀 Starting all projects..."
 	@if [ -d "$(REPO1_NAME)" ]; then \
-		echo "Starting $(REPO1_NAME) in background..."; \
-		cd $(REPO1_NAME) && (make start) & \
+		echo "Starting $(REPO1_NAME)..."; \
+		cd $(REPO1_NAME) && make start; \
 	fi
 	@if [ -d "$(REPO2_NAME)" ]; then \
-		echo "Starting $(REPO2_NAME) in background..."; \
-		cd $(REPO2_NAME) && ( & \
-	fi
-	@if [ -d "$(REPO3_NAME)" ]; then \
-		echo "Starting $(REPO3_NAME)..."; \
-		cd $(REPO3_NAME) && (); \
+		echo "Starting $(REPO2_NAME)..."; \
+		cd $(REPO2_NAME) && make start; \
 	fi
 
 # Install dependencies for all repositories
@@ -84,10 +80,6 @@ install:
 		echo "Installing dependencies for $(REPO2_NAME)..."; \
 		cd $(REPO2_NAME) && (make install); \
 	fi
-	@if [ -d "$(REPO3_NAME)" ]; then \
-		echo "Installing dependencies for $(REPO3_NAME)..."; \
-		cd $(REPO3_NAME) && (make install); \
-	fi
 
 .PHONY: stop
 stop:
@@ -96,16 +88,6 @@ stop:
 		echo "Stopping $(REPO1_NAME)..."; \
 		cd $(REPO1_NAME) && (make stop); \
 	fi
-	@if [ -d "$(REPO2_NAME)" ]; then \
-		echo "Stopping $(REPO2_NAME)..."; \
-		cd $(REPO2_NAME) && (make stop); \
-	fi
-	@if [ -d "$(REPO3_NAME)" ]; then \
-		echo "Stopping $(REPO3_NAME)..."; \
-		cd $(REPO3_NAME) && (make stop); \
-	fi
-
-
 
 # Clean up - remove all cloned repositories
 .PHONY: clean
