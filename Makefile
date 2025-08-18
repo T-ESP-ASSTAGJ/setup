@@ -59,13 +59,13 @@ clone-repo3:
 .PHONY: start
 start:
 	@echo "🚀 Starting all projects..."
-	@if [ -d "$(REPO1_NAME)" ]; then \
-		echo "Starting $(REPO1_NAME)..."; \
-		cd $(REPO1_NAME) && make start; \
-	fi
 	@if [ -d "$(REPO2_NAME)" ]; then \
 		echo "Starting $(REPO2_NAME)..."; \
 		cd $(REPO2_NAME) && make start; \
+	fi
+	@if [ -d "$(REPO1_NAME)" ]; then \
+		echo "Starting $(REPO1_NAME)..."; \
+		cd $(REPO1_NAME) && make start; \
 	fi
 
 # Install dependencies for all repositories
