@@ -4,13 +4,14 @@
 # Configuration
 REPO_BASE_URL := git@github.com:T-ESP-ASSTAGJ
 REPO1_NAME := api
-REPO2_NAME := client
+REPO2_NAME := client-swift
 REPO3_NAME := infra
-
+REPO4_NAME := web
 # Repository URLs
 REPO1_URL := $(REPO_BASE_URL)/$(REPO1_NAME).git
 REPO2_URL := $(REPO_BASE_URL)/$(REPO2_NAME).git
 REPO3_URL := $(REPO_BASE_URL)/$(REPO3_NAME).git
+REPO4_URL := $(REPO_BASE_URL)/$(REPO4_NAME).git
 
 # Default target
 .PHONY: help
@@ -24,7 +25,7 @@ help:
 
 # Clone all repositories
 .PHONY: setup
-setup: clone-repo1 clone-repo2 clone-repo3
+setup: clone-repo1 clone-repo2 clone-repo3 clone-repo4
 	@echo "✅ All repositories cloned successfully"
 
 # Clone individual repositories
@@ -55,6 +56,15 @@ clone-repo3:
 		echo "📁 $(REPO3_NAME) already exists"; \
 	fi
 
+.PHONY: clone-repo4
+clone-repo4:
+	@if [ ! -d "$(REPO4_NAME)" ]; then \
+                echo "🔄 Cloning $(REPO4_NAME)..."; \
+                git clone $(REPO4_URL) $(REPO4_NAME); \
+        else \
+                echo "📁 $(REPO4_NAME) already exists"; \
+        fi
+
 # Start all projects (assumes they're already cloned)
 .PHONY: start
 start:
@@ -80,6 +90,10 @@ install:
 		echo "Installing dependencies for $(REPO2_NAME)..."; \
 		cd $(REPO2_NAME) && (make install); \
 	fi
+	@if [ -d "$(REPO4_NAME)" ]; then \
+                echo "Installing dependencies for $(REPO4_NAME)..."; \
+                cd $(REPO4_NAME) && (make install); \
+        fi
 
 .PHONY: stop
 stop:
