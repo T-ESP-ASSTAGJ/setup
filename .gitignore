@@ -1,4 +1,6 @@
 api/
 client/
+client-swift/
 infra/
+web/
 .idea/
